@@ -6,7 +6,7 @@ WORK = 1
 SHORT_BREAK = 1
 LONG_BREAK = 20
 BG_COLOR = "#222831"
-FONT = "Courier"
+FONT = ("Courier", 50, "bold")
 timer_repeat = 0
 
 
@@ -44,13 +44,13 @@ def start_timer():
 
     if timer_repeat % 8 == 0:
         count_down(long_break_sec)
-        timer.config(text="Long Break")
+        timer_label.config(text="Long Break")
     elif timer_repeat % 2 == 0:
         count_down(short_break_sec)
-        timer.config(text="Short Break", fg="#cdb30c")
+        timer_label.config(text="Short Break", fg="#cdb30c")
     else:
         count_down(work_sec)
-        timer.config(text="Work Timer", fg="#28df99")
+        timer_label.config(text="Work Timer", fg="#28df99")
 
 
 # App Interface
@@ -58,14 +58,14 @@ interface = Tk()
 interface.title("A3AJAGBE POMODORO APP")
 interface.config(padx=100, pady=50, bg=BG_COLOR)
 
-timer = Label(text="Timer", fg="#f05454", bg=BG_COLOR, font=(FONT, 50, "bold"))
-timer.grid(column=1, row=0)
+timer_label = Label(text="Start Timer", fg="#f05454", bg=BG_COLOR, font=FONT)
+timer_label.grid(column=1, row=0)
 
 # Add background image using canvas widget
 canvas = Canvas(width=160, height=130, bg=BG_COLOR, highlightthickness=0)
 bg_image = PhotoImage(file="pomodoro_image.png")
 canvas.create_image(80, 65, image=bg_image)
-timer_text = canvas.create_text(80, 75, text="00:00", fill="white", font=(FONT, 50, "bold"))
+timer_text = canvas.create_text(80, 75, text="00:00", fill="white", font=FONT)
 canvas.grid(column=1, row=1)
 
 start = Button(text="Start", highlightthickness=0, command=start_timer)
