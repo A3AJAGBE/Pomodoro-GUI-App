@@ -8,6 +8,7 @@ LONG_BREAK = 20
 BG_COLOR = "#222831"
 FONT = ("Courier", 50, "bold")
 timer_repeat = 0
+timer = None
 
 
 def count_down(count):
@@ -24,7 +25,8 @@ def count_down(count):
 
     canvas.itemconfig(timer_text, text=f"{minutes}:{seconds}")
     if count > 0:
-        interface.after(1000, count_down, count - 1)
+        global timer
+        timer = interface.after(1000, count_down, count - 1)
     else:
         start_timer()
         add_check = ""
@@ -53,6 +55,16 @@ def start_timer():
         timer_label.config(text="Work Timer", fg="#28df99")
 
 
+def reset_timer():
+    """This function clears the timer"""
+    interface.after_cancel(timer)
+    canvas.itemconfig(timer_text, text="00:00")
+    timer_label.config(text="Start Timer")
+    checks.config(text="")
+    global timer_repeat
+    timer_repeat = 0
+
+
 # App Interface
 interface = Tk()
 interface.title("A3AJAGBE POMODORO APP")
@@ -71,7 +83,7 @@ canvas.grid(column=1, row=1)
 start = Button(text="Start", highlightthickness=0, command=start_timer)
 start.grid(column=0, row=2)
 
-reset = Button(text="Reset", highlightthickness=0)
+reset = Button(text="Reset", highlightthickness=0, command=reset_timer)
 reset.grid(column=2, row=2)
 
 checks = Label(bg=BG_COLOR)
