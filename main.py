@@ -1,6 +1,14 @@
 from tkinter import *
 import math
 
+# App Constants
+WORK = 1
+SHORT_BREAK = 5
+LONG_BREAK = 20
+BG_COLOR = "#222831"
+FONT = "Courier"
+timer_repeat = 0
+
 
 def count_down(count):
     """This function counts down the timer"""
@@ -17,20 +25,25 @@ def count_down(count):
     canvas.itemconfig(timer_text, text=f"{minutes}:{seconds}")
     if count > 0:
         interface.after(1000, count_down, count - 1)
+    else:
+        start_timer()
 
 
 def start_timer():
     """This function calls the countdown function"""
-    # multiply the count by 60
-    count_down(1 * 60)
+    global timer_repeat
+    timer_repeat += 1
+    work_sec = WORK * 60
+    short_break_sec = SHORT_BREAK * 60
+    long_break_sec = LONG_BREAK * 60
 
+    if timer_repeat % 8 == 0:
+        count_down(long_break_sec)
+    elif timer_repeat % 2 == 0:
+        count_down(short_break_sec)
+    else:
+        count_down(work_sec)
 
-# App Constants
-WORK = 25
-SHORT_BREAK = 5
-LONG_BREAK = 20
-BG_COLOR = "#222831"
-FONT = "Courier"
 
 # App Interface
 interface = Tk()
