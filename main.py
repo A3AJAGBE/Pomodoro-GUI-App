@@ -1,5 +1,13 @@
 from tkinter import *
 
+
+def count_down(count):
+    """This function counts down the timer"""
+    canvas.itemconfig(timer_text, text=count)
+    if count > 0:
+        interface.after(1000, count_down, count - 1)
+
+
 # App Constants
 WORK = 25
 SHORT_BREAK = 5
@@ -19,8 +27,11 @@ timer.grid(column=1, row=0)
 canvas = Canvas(width=160, height=130, bg=BG_COLOR, highlightthickness=0)
 bg_image = PhotoImage(file="pomodoro_image.png")
 canvas.create_image(80, 65, image=bg_image)
-canvas.create_text(80, 75, text="00:00", fill="white", font=(FONT, 40, "bold"))
+timer_text = canvas.create_text(80, 75, text="00:00", fill="white", font=(FONT, 40, "bold"))
 canvas.grid(column=1, row=1)
+
+# Add the count down function
+count_down(10)
 
 start = Button(text="Start", highlightthickness=0)
 start.grid(column=0, row=2)
