@@ -1,5 +1,6 @@
 from tkinter import *
 import math
+import beepy
 
 # App Constants
 WORK = 1
@@ -47,12 +48,15 @@ def start_timer():
     if timer_repeat % 8 == 0:
         count_down(long_break_sec)
         timer_label.config(text="Long Break")
+        beepy.beep(sound='ready')
     elif timer_repeat % 2 == 0:
         count_down(short_break_sec)
         timer_label.config(text="Short Break", fg="#cdb30c")
+        beepy.beep(sound='coin')
     else:
         count_down(work_sec)
         timer_label.config(text="Work Timer", fg="#28df99")
+        beepy.beep(sound='ping')
 
 
 def reset_timer():
