@@ -3,7 +3,7 @@ import math
 
 # App Constants
 WORK = 1
-SHORT_BREAK = 5
+SHORT_BREAK = 1
 LONG_BREAK = 20
 BG_COLOR = "#222831"
 FONT = "Courier"
@@ -27,6 +27,11 @@ def count_down(count):
         interface.after(1000, count_down, count - 1)
     else:
         start_timer()
+        add_check = ""
+        sessions = math.floor(timer_repeat/2)
+        for _ in range(sessions):
+            add_check += "✅"
+        checks.config(text=add_check)
 
 
 def start_timer():
@@ -69,8 +74,8 @@ start.grid(column=0, row=2)
 reset = Button(text="Reset", highlightthickness=0)
 reset.grid(column=2, row=2)
 
-check = Label(text="✅", bg=BG_COLOR)
-check.grid(column=1, row=3)
+checks = Label(bg=BG_COLOR)
+checks.grid(column=1, row=3)
 
 # Keep the app open until exited
 interface.mainloop()
