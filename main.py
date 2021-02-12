@@ -3,8 +3,8 @@ import math
 import beepy
 
 # App Constants
-WORK = 1
-SHORT_BREAK = 1
+WORK = 25
+SHORT_BREAK = 5
 LONG_BREAK = 20
 BG_COLOR = "#222831"
 FONT = ("Courier", 50, "bold")
@@ -46,22 +46,23 @@ def start_timer():
     long_break_sec = LONG_BREAK * 60
 
     if timer_repeat % 8 == 0:
+        beepy.beep(sound='ready')
         count_down(long_break_sec)
         timer_label.config(text="Long Break")
-        beepy.beep(sound='ready')
     elif timer_repeat % 2 == 0:
+        beepy.beep(sound='coin')
         count_down(short_break_sec)
         timer_label.config(text="Short Break", fg="#cdb30c")
-        beepy.beep(sound='coin')
     else:
+        beepy.beep(sound='ping')
         count_down(work_sec)
         timer_label.config(text="Work Timer", fg="#28df99")
-        beepy.beep(sound='ping')
 
 
 def reset_timer():
     """This function clears the timer"""
     interface.after_cancel(timer)
+    beepy.beep(sound='error')
     canvas.itemconfig(timer_text, text="00:00")
     timer_label.config(text="Start Timer")
     checks.config(text="")
